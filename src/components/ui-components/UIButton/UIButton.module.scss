@@ -1,0 +1,15 @@
+.button[name='regBtn'] {
+  @apply p-3 container flex items-center justify-center justify-items-center
+  bg-emerald-700 text-xl font-medium text-sky-100
+  focus-visible:bg-emerald-500 hover:bg-emerald-500 active:bg-emerald-950 outline-none
+  /* focus-visible:text-slate-500 hover:text-slate-600 */
+  transition-all duration-300
+}
+
+.button[name='logBtn'] {
+  @apply p-3 container flex items-center justify-center justify-items-center
+  bg-yellow-600 text-xl font-medium text-sky-100
+  focus-visible:bg-yellow-500 hover:bg-yellow-500 active:bg-yellow-700 outline-none
+  /* focus-visible:text-slate-500  hover:text-slate-600 */
+  transition-all duration-300
+}

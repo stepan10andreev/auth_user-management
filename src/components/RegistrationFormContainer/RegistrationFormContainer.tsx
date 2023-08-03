@@ -1,8 +1,10 @@
 'use client'
 import React, { useState } from 'react'
 import { RegistrationForm } from './RegistrationForm/RegistrationForm'
+import { AuthForm } from './AuthForm/AuthForm'
 
 export const RegistrationFormContainer = () => {
+  const [logIn, setLogIn] = useState(false)
   const [value, setValue] = useState('');
 
   const handleSubmit = () => {
@@ -13,11 +15,27 @@ export const RegistrationFormContainer = () => {
     console.log('Change')
   }
 
+  const handleLogin = () => {
+    setLogIn(true);
+  }
+
   return (
-    <RegistrationForm
-      onSubmit={handleSubmit}
-      onChange={handleChange}
-      value={value}
-    />
+    <>
+      {logIn ? (
+        <AuthForm
+          onSubmit={handleSubmit}
+          onChange={handleChange}
+          value={value}
+          setLogIn={setLogIn}
+        />
+      ) : (
+        <RegistrationForm
+          onSubmit={handleSubmit}
+          onChange={handleChange}
+          onClick={handleLogin}
+          value={value}
+        />
+      )}
+    </>
   )
 }

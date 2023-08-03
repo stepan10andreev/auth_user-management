@@ -6,7 +6,7 @@ import { UIInput } from '../../ui-components/UIInput/UIInput'
 import { UIButton } from '@/components/ui-components/UIButton/UIButton'
 
 export const RegistrationForm: FC<IRegistrationForm> = ({
-  onChange, value, onSubmit
+  onChange, value, onSubmit, onClick
 }) => {
   return (
     <form className={styles.form} onSubmit={onSubmit}>
@@ -54,6 +54,7 @@ export const RegistrationForm: FC<IRegistrationForm> = ({
         text={ERegistrationForm.loginBtnName}
         name='logBtn'
         type='button'
+        onClick={onClick}
       />
 
 

@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
+import React, { FC, MouseEventHandler } from 'react'
 import styles from './UIButton.module.scss'
 
 interface IUIButton {
   text?: string;
   type?: 'button' | 'submit' | 'reset';
   name?: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   icon?: React.JSX.Element
 }
 

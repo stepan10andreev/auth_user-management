@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FormEventHandler } from "react";
+import { ChangeEventHandler, FormEventHandler, MouseEventHandler } from "react";
 
 export enum ERegistrationForm {
   title = 'Registration Form',
@@ -15,4 +15,5 @@ export interface IRegistrationForm {
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   onSubmit: FormEventHandler<HTMLFormElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }

@@ -1,5 +1,5 @@
 .form {
-  @apply container flex flex-col items-center gap-2.5;
+  @apply p-8 container flex flex-col items-center gap-2.5;
 
   > h1 {
     @apply text-4xl font-semibold text-sky-200;

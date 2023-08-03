@@ -2,11 +2,14 @@
 import React, { useState } from 'react'
 import { RegistrationForm } from './RegistrationForm/RegistrationForm'
 import { AuthForm } from './AuthForm/AuthForm'
+import { useSession } from 'next-auth/react'
 
 export const RegistrationFormContainer = () => {
   const [logIn, setLogIn] = useState(false)
   const [value, setValue] = useState('');
 
+  // const session = useSession();
+  // console.log(session)
   const handleSubmit = () => {
     console.log('Submit')
   }

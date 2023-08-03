@@ -1,7 +1,6 @@
 import React, { ChangeEventHandler, FC, useState } from 'react'
 import styles from './Input.module.scss'
 
-
 export interface IUIInputProps {
   type: string;
   heading?: string;

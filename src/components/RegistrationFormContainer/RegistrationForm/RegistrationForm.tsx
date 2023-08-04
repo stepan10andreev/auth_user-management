@@ -6,10 +6,10 @@ import { UIInput } from '../../ui-components/UIInput/UIInput'
 import { UIButton } from '@/components/ui-components/UIButton/UIButton'
 
 export const RegistrationForm: FC<IRegistrationForm> = ({
-  onChange, value, onSubmit, onClick
+  onChange, nameValue, emailValue, passwordValue, loginValue, onSubmit, onClick
 }) => {
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
+    <form className={styles.form} onSubmit={onSubmit} name={ERegistrationForm.formName}>
       <Title As='h1' text={ERegistrationForm.title} />
 
       <UIInput
@@ -17,15 +17,15 @@ export const RegistrationForm: FC<IRegistrationForm> = ({
         type='text'
         heading={ERegistrationForm.nameHeading}
         onChange={onChange}
-        value={value}
+        value={nameValue}
       />
 
       <UIInput
-        name='surname'
+        name='login'
         type='text'
-        heading={ERegistrationForm.surnameHeading}
+        heading={ERegistrationForm.loginHeading}
         onChange={onChange}
-        value={value}
+        value={loginValue}
       />
 
       <UIInput
@@ -33,7 +33,7 @@ export const RegistrationForm: FC<IRegistrationForm> = ({
         type='email'
         heading={ERegistrationForm.emailHeading}
         onChange={onChange}
-        value={value}
+        value={emailValue}
       />
 
       <UIInput
@@ -41,7 +41,7 @@ export const RegistrationForm: FC<IRegistrationForm> = ({
         type='password'
         heading={ERegistrationForm.passwordHeading}
         onChange={onChange}
-        value={value}
+        value={passwordValue}
       />
 
       <UIButton

@@ -2,8 +2,9 @@ import { ChangeEventHandler, FormEventHandler, MouseEventHandler } from "react";
 
 export enum ERegistrationForm {
   title = 'Registration Form',
+  formName = 'regForm',
   nameHeading = 'Name',
-  surnameHeading = 'Surname',
+  loginHeading = 'Login',
   emailHeading = 'Email',
   passwordHeading = 'Password',
   regBtnName = 'Register',
@@ -12,7 +13,10 @@ export enum ERegistrationForm {
 
 
 export interface IRegistrationForm {
-  value: string;
+  nameValue: string;
+  loginValue: string;
+  emailValue: string;
+  passwordValue: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   onClick?: MouseEventHandler<HTMLButtonElement>

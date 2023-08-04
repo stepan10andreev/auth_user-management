@@ -5,7 +5,8 @@ export interface IUser  {
   login: string;
   password: string;
   isBlocked: boolean;
-
+  createdAt: string;
+  lastLogin: string;
 }
 
 export const USERS: IUser[] = [

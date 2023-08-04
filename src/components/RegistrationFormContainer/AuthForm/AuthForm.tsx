@@ -4,33 +4,29 @@ import { UIInput } from '@/components/ui-components/UIInput/UIInput'
 import React, { Dispatch, FC } from 'react'
 import { ERegistrationForm, IRegistrationForm } from '../RegistrationForm/RegistrationForm.interface'
 import styles from '../RegistrationForm/RegistrationForm.module.scss'
-import { EAuthForm } from './authForm.interface'
-
-interface IAuthForm extends IRegistrationForm {
-  setLogIn: Dispatch<React.SetStateAction<boolean>>
-}
+import { EAuthForm, IAuthForm } from './authForm.interface'
 
 export const AuthForm: FC<IAuthForm> = ({
-  onChange, value, onSubmit, setLogIn
+  onChange, passwordValue, loginValue, onSubmit, setLogIn
 }) => {
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
+    <form className={styles.form} onSubmit={onSubmit} name={EAuthForm.formName}>
       <Title As='h1' text={EAuthForm.title} />
 
       <UIInput
-        name='login'
+        name='authLogin'
         type='text'
         heading={EAuthForm.loginHeading}
         onChange={onChange}
-        value={value}
+        value={loginValue}
       />
 
       <UIInput
-        name='password'
+        name='authPassword'
         type='password'
         heading={EAuthForm.passwordHeading}
         onChange={onChange}
-        value={value}
+        value={passwordValue}
       />
 
       <UIButton

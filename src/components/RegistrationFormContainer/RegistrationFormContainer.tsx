@@ -4,6 +4,9 @@ import { RegistrationForm } from './RegistrationForm/RegistrationForm'
 import { AuthForm } from './AuthForm/AuthForm'
 import { useSession } from 'next-auth/react'
 import { getFormData } from '@/utils/getFormData'
+import { useRouter } from 'next/navigation'
+import { USER_SERVICE } from '@/services/user.service'
+import { ErrorText } from '../ui-components/ErrorText/ErrorText'
 
 export const RegistrationFormContainer = () => {
   const [logIn, setLogIn] = useState(false)
@@ -13,26 +16,25 @@ export const RegistrationFormContainer = () => {
   const [passwordValue, setPasswordValue] = useState('');
   const [authLoginValue, setAuthLoginValue] = useState('');
   const [authPasswordValue, setAuthPasswordValue] = useState('');
-  // const session = useSession();
-  // console.log(session)
+  const [notRegisteredError, setNotRegisteredError] = useState('');
+
+  const router = useRouter()
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     const FORM = event.currentTarget;
     const data = getFormData(FORM);
-    // console.log(FORM.getAttribute('name'));
+
     switch (FORM.getAttribute('name')) {
       case 'regForm':
-        console.log('here')
-        console.log(data)
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`, {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-            'Authorization': `${process.env.API_ROUTES_SECRET}`,
-          },
-          body: JSON.stringify(data)
-        });
-        console.log(await res.json())
+        const response = await USER_SERVICE.register(data)
+
+        if (response.error) {
+          setNotRegisteredError(response.message)
+        } else {
+          setNotRegisteredError('')
+          router.push(`/user-table?name=${response.username}`)
+        }
     }
 
   }
@@ -87,6 +89,8 @@ export const RegistrationFormContainer = () => {
           passwordValue={passwordValue}
         />
       )}
+
+      {notRegisteredError && <ErrorText errorText={notRegisteredError}/>}
     </>
   )
 }

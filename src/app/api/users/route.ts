@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
   if (repeatedLogin) {
     return NextResponse.json({
       message: 'This login is already exists',
+      error: true
     }, {
       status: 409,
     })
@@ -43,6 +44,8 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({
     message: 'You are registered',
+    username: `${USER.name}`,
+    id: `${USER.id}`
   }, {
     status: 200,
   })

@@ -6,6 +6,7 @@ import { UserItem } from './UserItem/UserItem'
 import { Checkbox } from '../ui-components/tailwinds-components/tailwinds'
 import { useAppDispatch, useAppSelector } from '../Hooks/useApp'
 import { EMethods, manageUsers, selectAll } from '@/store/userManagement'
+import { TableHeadings } from './TableHeadings/TableHeadings'
 
 export const UserTable: FC<IUserTable> = ({ usersList }) => {
 
@@ -24,18 +25,8 @@ export const UserTable: FC<IUserTable> = ({ usersList }) => {
   }
   return (
     <div className={styles.table}>
-      <div className={styles.headings}>
-        <div>
-          <Checkbox id='1' color="indigo" onChange={handleChange} checked={checkedValue}/>
-        </div>
-        <div>id</div>
-        <div>name</div>
-        <div>email</div>
-        <div>createdAt</div>
-        <div>lastLogin</div>
-        <div>status</div>
+      <TableHeadings onChange={handleChange} checkedValue={checkedValue}/>
 
-      </div>
       {usersList.map((user, index) => (
         <UserItem
           key={user.id}

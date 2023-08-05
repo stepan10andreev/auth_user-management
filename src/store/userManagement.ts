@@ -1,37 +1,47 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface IUserViewFormPayload {
-  prop: string;
-  value: string;
+interface IAddUserPayload {
+  id: string;
+  method?: EMethods;
+}
+
+export enum EMethods {
+  add = "ADD",
+  delete = "DELETE",
 }
 
 export interface IUserManamement {
-  [k: string]: string | boolean;
+  [k: string]: string | boolean | string[];
   selectAll: boolean;
+  selectedUsersId: string[];
 }
 
 const initialState: IUserManamement = {
   selectAll: false,
-
+  selectedUsersId: [],
 }
 
 const userManagementSlice = createSlice({
   name: 'userManagement',
   initialState,
   reducers: {
-    // selectAll: {
-    //   reducer(state, action: PayloadAction<IUserViewFormPayload>) {
-    //     state.selectAll = !state.selectAll
-    //   },
-    //   prepare(prop: string, value: string) {
-    //     return {
-    //       payload: {
-    //         prop,
-    //         value,
-    //       }
-    //     }
-    //   },
-    // },
+    manageUsers: {
+      reducer(state, action: PayloadAction<IAddUserPayload>) {
+        action.payload.method === 'ADD' ?
+          state.selectedUsersId = [...state.selectedUsersId, action.payload.id] :
+        action.payload.method === 'DELETE' ?
+          (state.selectedUsersId = state.selectedUsersId.filter(userId => userId != action.payload.id)):
+        ''
+      },
+      prepare(id: string, method?: EMethods) {
+        return {
+          payload: {
+            id,
+            method,
+          }
+        }
+      },
+    },
     selectAll: (state) => {
       state.selectAll = !state.selectAll
     },
@@ -41,6 +51,6 @@ const userManagementSlice = createSlice({
   }
 })
 
-export const { selectAll } = userManagementSlice.actions;
+export const { selectAll, manageUsers } = userManagementSlice.actions;
 
 export default userManagementSlice.reducer;

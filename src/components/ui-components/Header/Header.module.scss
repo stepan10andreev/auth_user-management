@@ -1,3 +1,7 @@
 .header {
-  @apply p-4 border-b-blue-gray-200 border-solid border-b-4;
+  @apply p-4 border-b-gray-200 border-solid border-b-4;
+
+  > div > h1 {
+    @apply self-center
+  }
 }

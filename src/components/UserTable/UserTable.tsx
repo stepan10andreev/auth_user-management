@@ -1,11 +1,11 @@
 'use client'
-import React, { FC } from 'react'
+import React, { ChangeEventHandler, FC } from 'react'
 import { IUserTable } from './userTable.interface'
 import styles from './UserTable.module.scss'
 import { UserItem } from './UserItem/UserItem'
 import { Checkbox } from '../ui-components/tailwinds-components/tailwinds'
 import { useAppDispatch, useAppSelector } from '../Hooks/useApp'
-import { selectAll } from '@/store/userManagement'
+import { EMethods, manageUsers, selectAll } from '@/store/userManagement'
 
 export const UserTable: FC<IUserTable> = ({ usersList }) => {
 
@@ -13,14 +13,20 @@ export const UserTable: FC<IUserTable> = ({ usersList }) => {
 
   const dispatch = useAppDispatch();
 
-  const handleChange = () => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const currentChecked = event.currentTarget.checked;
     dispatch(selectAll())
+    currentChecked ? (
+      usersList.forEach((user) => dispatch(manageUsers(user.id, EMethods.add)))
+    ) : (
+      usersList.forEach((user) => dispatch(manageUsers(user.id, EMethods.delete)))
+    )
   }
   return (
     <div className={styles.table}>
       <div className={styles.headings}>
         <div>
-          <Checkbox id='1' color="indigo" defaultChecked onChange={handleChange} checked={checkedValue}/>
+          <Checkbox id='1' color="indigo" onChange={handleChange} checked={checkedValue}/>
         </div>
         <div>id</div>
         <div>name</div>

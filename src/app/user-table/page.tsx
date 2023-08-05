@@ -6,24 +6,31 @@ import { Container } from '@/components/ui-components/Container/Container'
 import { Content } from '@/components/ui-components/Content/Content'
 import { Header } from '@/components/ui-components/Header/Header'
 import { Welcome } from '@/components/ui-components/Welcome/Welcome'
+import { AuthConfig } from '@/configs/auth'
 import { USER_SERVICE } from '@/services/user.service'
+import { getServerSession } from 'next-auth/next'
+import Link from 'next/link'
 
 
 
 export default async function UserTablePage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+  const session = await getServerSession(AuthConfig);
+  console.log(session)
   const usersList = await USER_SERVICE.getUsers();
-
   return (
     <>
       <Header>
         <Container>
-          <Welcome greeting={`Hi, ${searchParams.name}!`} As='h1' />
+          <Welcome greeting={`Hi, ${searchParams.name ? searchParams.name : 'You are not authorized'}!`} As='h1' />
+          {!session && <Link href="/">Home</Link>}
         </Container>
       </Header>
-      <Content>
-        <Toolbar />
-        <UserTable usersList={usersList} />
-      </Content>
+      {session && (
+        <Content>
+          <Toolbar />
+          <UserTable usersList={usersList} />
+        </Content>
+      )}
     </>
   )
 }

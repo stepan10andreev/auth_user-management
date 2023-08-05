@@ -5,10 +5,8 @@ import { Content } from '@/components/ui-components/Content/Content'
 
 export default function Home() {
   return (
-    <Content>
       <Container>
         <RegistrationFormContainer />
       </Container>
-    </Content>
   )
 }

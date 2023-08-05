@@ -1,3 +1,9 @@
 .greeting {
   @apply text-2xl font-semibold text-blue-gray-200 self-start;
+
+  + a {
+    @apply text-3xl text-amber-800 underline focus-visible:scale-110 focus-visible:text-amber-600
+    hover:scale-110  hover:text-amber-600  active:text-amber-900  active:scale-95 decoration-solid outline-none transition-all
+    duration-300
+  }
 }

@@ -2,11 +2,11 @@
   @apply container flex flex-col gap-1.5;
 
   .heading {
-    @apply text-xl font-medium text-sky-200;
+    @apply text-xl font-medium text-blue-gray-200;
   }
 
   .input {
-    @apply p-3 bg-gray-400 bg-opacity-50 border-l-4 border-transparent focus:bg-opacity-100 focus:border-cyan-950 hover:bg-opacity-80
+    @apply p-3 bg-gray-400 bg-opacity-50 border-l-4 border-transparent focus:bg-opacity-100 focus:border-cyan-900 hover:bg-opacity-80
     outline-none transition-all duration-300 text-lg;
   }
 }

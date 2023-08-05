@@ -7,8 +7,10 @@ import styles from '../RegistrationForm/RegistrationForm.module.scss'
 import { EAuthForm, IAuthForm } from './authForm.interface'
 
 export const AuthForm: FC<IAuthForm> = ({
-  onChange, passwordValue, loginValue, onSubmit, setLogIn
+  onChange, passwordValue, loginValue, onSubmit, setLogIn, setAuthError
 }) => {
+
+
   return (
     <form className={styles.form} onSubmit={onSubmit} name={EAuthForm.formName}>
       <Title As='h1' text={EAuthForm.title} />
@@ -39,7 +41,7 @@ export const AuthForm: FC<IAuthForm> = ({
         text={EAuthForm.returnBtn}
         name='returnBtn'
         type='button'
-        onClick={() => setLogIn(false)}
+        onClick={() => {setLogIn(false), setAuthError(false)}}
       />
 
     </form>

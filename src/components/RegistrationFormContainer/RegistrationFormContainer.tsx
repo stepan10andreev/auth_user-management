@@ -2,11 +2,15 @@
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { RegistrationForm } from './RegistrationForm/RegistrationForm'
 import { AuthForm } from './AuthForm/AuthForm'
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { getFormData } from '@/utils/getFormData'
 import { useRouter } from 'next/navigation'
 import { USER_SERVICE } from '@/services/user.service'
 import { ErrorText } from '../ui-components/ErrorText/ErrorText'
+import { foundEmptyValue } from '@/utils/foundEmptyValue.ts'
+import { IUser } from '../../../data/users'
+import { ERegistrationForm } from './RegistrationForm/RegistrationForm.interface'
+import { EAuthForm } from './AuthForm/authForm.interface'
 
 export const RegistrationFormContainer = () => {
   const [logIn, setLogIn] = useState(false)
@@ -17,6 +21,8 @@ export const RegistrationFormContainer = () => {
   const [authLoginValue, setAuthLoginValue] = useState('');
   const [authPasswordValue, setAuthPasswordValue] = useState('');
   const [notRegisteredError, setNotRegisteredError] = useState('');
+  const [emptyValue, setEmptyValue] = useState(false);
+  const [authError, setAuthError] = useState(false);
 
   const router = useRouter()
 
@@ -25,9 +31,20 @@ export const RegistrationFormContainer = () => {
     const FORM = event.currentTarget;
     const data = getFormData(FORM);
 
+    const emptyData = foundEmptyValue(getFormData(FORM) as object);
+
+    if (emptyData) {
+      setEmptyValue(true);
+      return;
+    } else {
+      setEmptyValue(false);
+    }
+
     switch (FORM.getAttribute('name')) {
       case 'regForm':
-        const response = await USER_SERVICE.register(data)
+        const regData = getFormData<Pick<IUser, 'name' | 'email' | 'password' | 'login'>>(FORM);
+
+        const response = await USER_SERVICE.register(regData)
 
         if (response.error) {
           setNotRegisteredError(response.message)
@@ -35,7 +52,20 @@ export const RegistrationFormContainer = () => {
           setNotRegisteredError('')
           router.push(`/user-table?name=${response.username}`)
         }
-    }
+      case 'authForm':
+        const authData = getFormData<Record<"authPassword" | "authLogin", string> >(FORM);
+        const result = await signIn('credentials', {
+          login: authData.authLogin,
+          password: authData.authPassword,
+          redirect: false,
+        })
+
+        if(result && !result.error) {
+          router.push('/user-table')
+        } else {
+          setAuthError(true)
+        }
+      }
 
   }
 
@@ -66,6 +96,7 @@ export const RegistrationFormContainer = () => {
 
   const handleLogin = () => {
     setLogIn(true);
+    setEmptyValue(false)
   }
 
   return (
@@ -77,6 +108,7 @@ export const RegistrationFormContainer = () => {
           loginValue={authLoginValue}
           passwordValue={authPasswordValue}
           setLogIn={setLogIn}
+          setAuthError={setAuthError}
         />
       ) : (
         <RegistrationForm
@@ -90,7 +122,11 @@ export const RegistrationFormContainer = () => {
         />
       )}
 
-      {notRegisteredError && <ErrorText errorText={notRegisteredError}/>}
+      {notRegisteredError && <ErrorText errorText={notRegisteredError} />}
+
+      {emptyValue && <ErrorText errorText={ERegistrationForm.errorEmptyValue} />}
+
+      {authError && <ErrorText errorText={EAuthForm.authError} />}
     </>
   )
 }

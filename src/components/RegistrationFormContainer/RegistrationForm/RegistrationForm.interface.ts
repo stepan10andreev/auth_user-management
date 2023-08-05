@@ -8,7 +8,8 @@ export enum ERegistrationForm {
   emailHeading = 'Email',
   passwordHeading = 'Password',
   regBtnName = 'Register',
-  loginBtnName = 'Login'
+  loginBtnName = 'Login',
+  errorEmptyValue = 'There are empty fields'
 }
 
 

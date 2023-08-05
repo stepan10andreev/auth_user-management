@@ -33,16 +33,6 @@ export const Toolbar = () => {
     router.refresh();
   }
 
-  // const handleLocked = () => {
-  //   usersId.forEach(usersId => USER_SERVICE.changeStatus(usersId, 'locked'))
-  //   dispatch(reset());
-  //   router.refresh();
-  // }
-
-  // const handleDeleted = () => {
-  //   // usersId.forEach(usersId => USER_SERVICE.changeStatus(usersId, 'locked'))
-  // }
-
   return (
     <div className={styles.wrapper}>
       <UIButton onClick={handleClick} icon={<UnlockedIcon />} name='unlockedBtn' />

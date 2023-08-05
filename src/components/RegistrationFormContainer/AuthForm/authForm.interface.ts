@@ -7,11 +7,13 @@ export enum EAuthForm {
   loginHeading = 'Your Login',
   passwordHeading = 'Your Password',
   signInBtnName = 'Sign In',
-  returnBtn = 'Return to Registration Form'
+  returnBtn = 'Return to Registration Form',
+  authError = 'Check your login and password'
 }
 
 
 export interface IAuthForm extends Omit<IRegistrationForm, 'emailValue' | 'nameValue'> {
-  setLogIn: Dispatch<React.SetStateAction<boolean>>
+  setLogIn: Dispatch<React.SetStateAction<boolean>>,
+  setAuthError: Dispatch<React.SetStateAction<boolean>>,
 }
 

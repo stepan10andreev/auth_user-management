@@ -1,5 +1,6 @@
 import { RegistrationForm } from '@/components/RegistrationFormContainer/RegistrationForm/RegistrationForm'
 import { RegistrationFormContainer } from '@/components/RegistrationFormContainer/RegistrationFormContainer'
+import { Toolbar } from '@/components/Toolbar/Toolbar'
 import { UserTable } from '@/components/UserTable/UserTable'
 import { Container } from '@/components/ui-components/Container/Container'
 import { Content } from '@/components/ui-components/Content/Content'
@@ -20,7 +21,8 @@ export default async function UserTablePage({ searchParams }: { searchParams: { 
         </Container>
       </Header>
       <Content>
-          <UserTable usersList={usersList} />
+        <Toolbar />
+        <UserTable usersList={usersList} />
       </Content>
     </>
   )

@@ -4,4 +4,8 @@
   >div{
     @apply self-center text-teal-200
   }
+
+  >div:last-child {
+    @apply justify-self-center
+  }
 }

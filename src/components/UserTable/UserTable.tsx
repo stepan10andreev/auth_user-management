@@ -5,6 +5,7 @@ import styles from './UserTable.module.scss'
 import { UserItem } from './UserItem/UserItem'
 import { Checkbox } from '../ui-components/tailwinds-components/tailwinds'
 import { useAppDispatch, useAppSelector } from '../Hooks/useApp'
+import { selectAll } from '@/store/userManagement'
 
 export const UserTable: FC<IUserTable> = ({ usersList }) => {
 
@@ -13,7 +14,7 @@ export const UserTable: FC<IUserTable> = ({ usersList }) => {
   const dispatch = useAppDispatch();
 
   const handleChange = () => {
-
+    dispatch(selectAll())
   }
   return (
     <div className={styles.table}>

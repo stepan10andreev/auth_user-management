@@ -21,7 +21,7 @@ export default async function UserTablePage({ searchParams }: { searchParams: { 
     <>
       <Header>
         <Container>
-          <Welcome greeting={`Hi, ${searchParams.name ? searchParams.name : 'You are not authorized'}!`} As='h1' />
+          <Welcome greeting={`Hi, ${session ? session.user?.name : 'You are not authorized'}!`} As='h1' />
           {!session && <Link href="/">Home</Link>}
         </Container>
       </Header>

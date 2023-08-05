@@ -11,6 +11,8 @@ import { foundEmptyValue } from '@/utils/foundEmptyValue.ts'
 import { IUser } from '../../../data/users'
 import { ERegistrationForm } from './RegistrationForm/RegistrationForm.interface'
 import { EAuthForm } from './AuthForm/authForm.interface'
+import { Modal } from '../ui-components/Modal/Modal'
+import { BounceLoader } from 'react-spinners'
 
 export const RegistrationFormContainer = () => {
   const [logIn, setLogIn] = useState(false)
@@ -23,6 +25,7 @@ export const RegistrationFormContainer = () => {
   const [notRegisteredError, setNotRegisteredError] = useState('');
   const [emptyValue, setEmptyValue] = useState(false);
   const [authError, setAuthError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter()
 
@@ -44,28 +47,46 @@ export const RegistrationFormContainer = () => {
       case 'regForm':
         const regData = getFormData<Pick<IUser, 'name' | 'email' | 'password' | 'login'>>(FORM);
 
+        setLoading(true);
         const response = await USER_SERVICE.register(regData)
 
         if (response.error) {
           setNotRegisteredError(response.message)
+          setLoading(false);
         } else {
-          setNotRegisteredError('')
-          router.push(`/user-table?name=${response.username}`)
+          setNotRegisteredError('');
+          await signIn('credentials', {
+            login: regData.login,
+            password: regData.password,
+            redirect: false,
+          })
+          setLoading(false);
+
+          router.push('/user-table')
         }
+        break;
       case 'authForm':
-        const authData = getFormData<Record<"authPassword" | "authLogin", string> >(FORM);
+        const authData = getFormData<Record<"authPassword" | "authLogin", string>>(FORM);
+
+        setLoading(true);
+
         const result = await signIn('credentials', {
           login: authData.authLogin,
           password: authData.authPassword,
           redirect: false,
         })
 
-        if(result && !result.error) {
+
+        if (result && !result.error) {
+          setLoading(false);
+          setAuthError(false);
           router.push('/user-table')
         } else {
-          setAuthError(true)
+          setLoading(false);
+          setAuthError(true);
         }
-      }
+        break;
+    }
 
   }
 
@@ -96,7 +117,8 @@ export const RegistrationFormContainer = () => {
 
   const handleLogin = () => {
     setLogIn(true);
-    setEmptyValue(false)
+    setEmptyValue(false);
+    setNotRegisteredError('');
   }
 
   return (
@@ -127,6 +149,12 @@ export const RegistrationFormContainer = () => {
       {emptyValue && <ErrorText errorText={ERegistrationForm.errorEmptyValue} />}
 
       {authError && <ErrorText errorText={EAuthForm.authError} />}
+
+      {loading && (
+        <Modal>
+          <BounceLoader color="#36d7b7" size={120} />
+        </Modal>
+      )}
     </>
   )
 }

@@ -51,15 +51,52 @@ export async function POST(request: NextRequest) {
   })
 }
 
+export async function PATCH(request: NextRequest) {
+  const body = await request.json();
+
+  const noUser = !USERS.find(user => user.id === body.id);
+
+  if (noUser) return NextResponse.json({
+    message: 'There is no user with such id',
+    id: `${body.id}`
+  }, {
+    status: 409,
+  })
+
+  USERS.map(user => {
+    user.id === body.id && (
+      body.isBlocked === 'locked' ? user.isBlocked = true :
+        body.isBlocked === 'unlocked' ? user.isBlocked = false :
+          ''
+    )
+  })
+
+  return NextResponse.json({
+    message: 'Status is changed',
+    username: `${body.id}`,
+    id: `${body.id}`
+  }, {
+    status: 200,
+  })
+}
+
 
 export async function DELETE(request: NextRequest) {
-  const headersList = headers();
-  const userId = headersList.get('userId');
+  const body = await request.json();
+  const userId = body.id;
   const userIndex = USERS.findIndex(user => user.id === userId);
+
+
+  // logic что массив уменьшился тогда возвращаем 200
+  if (userIndex === -1) return NextResponse.json({
+    message: 'There is no user with such id',
+    id: `${body.id}`
+  }, {
+    status: 409,
+  })
 
   // logic delete
   USERS.splice(userIndex, 1);
-  // logic что массив уменьшился тогда возвращаем 200
 
   return NextResponse.json({
     message: `User ${userId} is deleted`,
@@ -70,17 +107,3 @@ export async function DELETE(request: NextRequest) {
 }
 
 
-// fetch('http://localhost:8080/users', {
-//         method: 'DELETE',
-//         headers: {
-//             userId: id
-//         }
-//     })
-
-
-// fetch('http://localhost:8080/users?key=  &userId=2', {
-//         method: 'DELETE',
-//         headers: {
-//             user: id
-//         }
-//     })

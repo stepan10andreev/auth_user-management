@@ -23,5 +23,40 @@ export const USER_SERVICE = {
     const data = await res.json();
 
     return data;
+  },
+
+  async changeStatus(id: string, status: string): Promise<any> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`, {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': `${process.env.API_ROUTES_SECRET}`,
+      },
+      body: JSON.stringify({
+        id: id,
+        isBlocked: status,
+      }),
+    })
+
+    const data = await res.json();
+
+    return data;
+  },
+
+  async delete(id: string): Promise<any> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': `${process.env.API_ROUTES_SECRET}`,
+      },
+      body: JSON.stringify({
+        id: id,
+      }),
+    })
+
+    const data = await res.json();
+
+    return data;
   }
 }

@@ -14,11 +14,13 @@ export interface IUserManamement {
   [k: string]: string | boolean | string[];
   selectAll: boolean;
   selectedUsersId: string[];
+  reset: boolean;
 }
 
 const initialState: IUserManamement = {
   selectAll: false,
   selectedUsersId: [],
+  reset: false,
 }
 
 const userManagementSlice = createSlice({
@@ -45,12 +47,13 @@ const userManagementSlice = createSlice({
     selectAll: (state) => {
       state.selectAll = !state.selectAll
     },
-    // resetUserViewFormData: (state) => {
-    //   return state = { ...initialState };
-    // }
+    reset: (state) => {
+      state.reset = !state.reset;
+      state.selectedUsersId = initialState.selectedUsersId;
+    }
   }
 })
 
-export const { selectAll, manageUsers } = userManagementSlice.actions;
+export const { selectAll, manageUsers, reset } = userManagementSlice.actions;
 
 export default userManagementSlice.reducer;

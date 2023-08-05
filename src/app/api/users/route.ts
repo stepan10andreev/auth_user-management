@@ -8,15 +8,15 @@ import { findRepeatElement } from '@/utils/findRepeatElement';
 export async function GET(request: NextRequest) {
   // // if request: Request (global type) only this variant
   // const { searchParams } = new URL(request.url)
-  console.log(request)
+
   const searchParams = request.nextUrl.searchParams;
   const key = searchParams.get('key');
 
   if (!key || key !== process.env.API_ROUTES_SECRET) {
-    return NextResponse.json({ message: 'You are not authenticated to call to this API' });
+    return NextResponse.json({ message: 'You are not authenticated to call to this API' }, { status: 401 });
   }
 
-  return NextResponse.json(USERS);
+  return NextResponse.json(USERS, { status: 200 });
 }
 
 
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 
   const lastLogin = getDateString();
 
-  const userObj: Omit<IUser, 'id' | 'createdAt'> = {...body, lastLogin};
+  const userObj: Omit<IUser, 'id' | 'createdAt'> = { ...body, lastLogin };
 
   const USER = new User(userObj);
 

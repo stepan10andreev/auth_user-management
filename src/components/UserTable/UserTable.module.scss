@@ -1,0 +1,13 @@
+.table {
+  @apply container;
+
+  .headings {
+    @apply grid grid-cols-7 gap-2;
+
+    >div {
+      @apply self-center text-xl text-blue-gray-400
+    }
+  }
+
+
+}

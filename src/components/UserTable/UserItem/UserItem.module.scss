@@ -1,0 +1,7 @@
+.wrapper {
+  @apply grid grid-cols-7 gap-2;
+
+  >div{
+    @apply self-center text-teal-200
+  }
+}

@@ -1,8 +1,9 @@
 import { NextResponse, NextRequest } from 'next/server'
-import { IUser, USERS } from '../../../../data/users'
+import { IUser } from '../../../../data/users'
 import { User } from '@/class/User';
 import { getDateString } from '@/utils/getDateString';
 import { findRepeatElement } from '@/utils/findRepeatElement';
+import { USERS } from '@/app/user-table/page';
 
 export async function GET(request: NextRequest) {
   // // if request: Request (global type) only this variant

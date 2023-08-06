@@ -1,7 +1,7 @@
 import type { AuthOptions, Session } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
-import { USERS } from "@/app/user-table/page";
+import { USERS } from "@/app/api/users/route";
 
 export const AuthConfig: AuthOptions = {
   providers: [

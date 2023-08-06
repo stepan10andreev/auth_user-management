@@ -20,6 +20,7 @@ export async function GET(request: NextRequest) {
 
 
 export async function POST(request: NextRequest) {
+
   const body = await request.json();
 
   const repeatedLogin = findRepeatElement(USERS, 'login', body.login);
@@ -82,6 +83,7 @@ export async function PATCH(request: NextRequest) {
 
 
 export async function DELETE(request: NextRequest) {
+
   const body = await request.json();
   const userId = body.id;
   const userIndex = USERS.findIndex(user => user.id === userId);

@@ -3,11 +3,6 @@ import Credentials from "next-auth/providers/credentials";
 import { IUser, USERS } from "../../data/users";
 import { JWT } from "next-auth/jwt";
 
-type IID = {
-  id?: string;
-
-};
-
 export const AuthConfig: AuthOptions = {
   providers: [
     Credentials({
@@ -17,16 +12,23 @@ export const AuthConfig: AuthOptions = {
       },
       async authorize(credentials) {
         // реквезитов нет - возвращаем null
-        if (!credentials?.login || !credentials.password) return null;
+        if (!credentials?.login || !credentials.password) throw new Error('Check your login and password');
         // если не прошла авторизация
         const currentUser = USERS.find((user) => user.login === credentials.login);
 
         if(currentUser && currentUser.password === credentials.password) {
+          if (currentUser.isBlocked) {
+            throw new Error('You are blocked')
+          }
           const {password, ...rest} = currentUser;
           return rest;
         }
 
-        return null;
+        if(!currentUser) {
+          throw new Error('There is no such user. Register please');
+        }
+
+        throw new Error('Check your login and password');
       }
     })
   ],
@@ -35,8 +37,9 @@ export const AuthConfig: AuthOptions = {
   },
   callbacks: {
     async session({ session, token }: { session: Session, token: JWT}) {
+      // it need declarations for Session
+      session.user.id = token.sub;
 
-      session.user.id = token.sub
 
       return session
     },

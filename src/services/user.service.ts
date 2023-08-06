@@ -1,3 +1,4 @@
+import { getDateString } from "@/utils/getDateString";
 import { IUser } from "../../data/users";
 
 
@@ -19,6 +20,25 @@ export const USER_SERVICE = {
 
   async getUsers(): Promise<IUser[]> {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users?key=${process.env.API_ROUTES_SECRET}`);
+
+    const data = await res.json();
+
+    return data;
+  },
+
+  async login(id: string): Promise<any> {
+    const lastLogin = getDateString();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`, {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': `${process.env.API_ROUTES_SECRET}`,
+      },
+      body: JSON.stringify({
+        id: id,
+        lastLogin: lastLogin,
+      }),
+    })
 
     const data = await res.json();
 

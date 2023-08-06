@@ -15,8 +15,9 @@ import Link from 'next/link'
 
 export default async function UserTablePage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const session = await getServerSession(AuthConfig);
-  console.log(session)
+  session && await USER_SERVICE.login(session.user.id as string);
   const usersList = await USER_SERVICE.getUsers();
+  console.log(session)
   return (
     <>
       <Header>
@@ -27,7 +28,7 @@ export default async function UserTablePage({ searchParams }: { searchParams: { 
       </Header>
       {session && (
         <Content>
-          <Toolbar />
+          <Toolbar userId={session.user.id as string} />
           <UserTable usersList={usersList} />
         </Content>
       )}

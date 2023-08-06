@@ -67,7 +67,8 @@ export async function PATCH(request: NextRequest) {
     user.id === body.id && (
       body.isBlocked === 'locked' ? user.isBlocked = true :
         body.isBlocked === 'unlocked' ? user.isBlocked = false :
-          ''
+          body.lastLogin ? user.lastLogin = body.lastLogin :
+            ''
     )
   })
 

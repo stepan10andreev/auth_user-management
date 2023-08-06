@@ -24,7 +24,7 @@ export const RegistrationFormContainer = () => {
   const [authPasswordValue, setAuthPasswordValue] = useState('');
   const [notRegisteredError, setNotRegisteredError] = useState('');
   const [emptyValue, setEmptyValue] = useState(false);
-  const [authError, setAuthError] = useState(false);
+  const [authError, setAuthError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const router = useRouter()
@@ -74,14 +74,14 @@ export const RegistrationFormContainer = () => {
           password: authData.authPassword,
           redirect: false,
         })
-
+        console.log(result)
         if (result && !result.error) {
           setLoading(false);
-          setAuthError(false);
+          setAuthError('');
           router.push('/user-table')
         } else {
           setLoading(false);
-          setAuthError(true);
+          setAuthError(result?.error as string);
         }
         break;
     }
@@ -146,7 +146,7 @@ export const RegistrationFormContainer = () => {
 
       {emptyValue && <ErrorText errorText={ERegistrationForm.errorEmptyValue} />}
 
-      {authError && <ErrorText errorText={EAuthForm.authError} />}
+      {authError && <ErrorText errorText={authError} />}
 
       {loading && (
         <Modal>

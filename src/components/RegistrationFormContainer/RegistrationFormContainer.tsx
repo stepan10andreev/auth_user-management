@@ -12,6 +12,7 @@ import { IUser } from '../../../data/users'
 import { ERegistrationForm } from './RegistrationForm/RegistrationForm.interface'
 import { Modal } from '../ui-components/Modal/Modal'
 import { BounceLoader } from 'react-spinners'
+import { inputOnlyLatin } from '@/utils/inputOnlyLatin'
 
 export const RegistrationFormContainer = () => {
   const [logIn, setLogIn] = useState(false)
@@ -98,12 +99,14 @@ export const RegistrationFormContainer = () => {
         setEmailValue(INPUT.value)
         break;
       case 'login':
+        INPUT.value = inputOnlyLatin(INPUT.value);
         setLoginValue(INPUT.value)
         break;
       case 'password':
         setPasswordValue(INPUT.value)
         break;
       case 'authLogin':
+        INPUT.value = inputOnlyLatin(INPUT.value);
         setAuthLoginValue(INPUT.value)
         break;
       case 'authPassword':

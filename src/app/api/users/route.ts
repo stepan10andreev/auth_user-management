@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server'
 import { IUser, USERS } from '../../../../data/users'
-import { headers } from 'next/dist/client/components/headers';
 import { User } from '@/class/User';
 import { getDateString } from '@/utils/getDateString';
 import { findRepeatElement } from '@/utils/findRepeatElement';
@@ -87,8 +86,6 @@ export async function DELETE(request: NextRequest) {
   const userId = body.id;
   const userIndex = USERS.findIndex(user => user.id === userId);
 
-
-  // logic что массив уменьшился тогда возвращаем 200
   if (userIndex === -1) return NextResponse.json({
     message: 'There is no user with such id',
     id: `${body.id}`
@@ -96,7 +93,6 @@ export async function DELETE(request: NextRequest) {
     status: 409,
   })
 
-  // logic delete
   USERS.splice(userIndex, 1);
 
   return NextResponse.json({

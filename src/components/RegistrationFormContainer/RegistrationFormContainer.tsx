@@ -2,7 +2,7 @@
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { RegistrationForm } from './RegistrationForm/RegistrationForm'
 import { AuthForm } from './AuthForm/AuthForm'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import { getFormData } from '@/utils/getFormData'
 import { useRouter } from 'next/navigation'
 import { USER_SERVICE } from '@/services/user.service'
@@ -10,7 +10,6 @@ import { ErrorText } from '../ui-components/ErrorText/ErrorText'
 import { foundEmptyValue } from '@/utils/foundEmptyValue.ts'
 import { IUser } from '../../../data/users'
 import { ERegistrationForm } from './RegistrationForm/RegistrationForm.interface'
-import { EAuthForm } from './AuthForm/authForm.interface'
 import { Modal } from '../ui-components/Modal/Modal'
 import { BounceLoader } from 'react-spinners'
 
@@ -27,7 +26,7 @@ export const RegistrationFormContainer = () => {
   const [authError, setAuthError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -74,7 +73,7 @@ export const RegistrationFormContainer = () => {
           password: authData.authPassword,
           redirect: false,
         })
-        console.log(result)
+
         if (result && !result.error) {
           setLoading(false);
           setAuthError('');

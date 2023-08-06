@@ -57,7 +57,6 @@ export const RegistrationForm: FC<IRegistrationForm> = ({
         onClick={onClick}
       />
 
-
     </form>
   )
 }

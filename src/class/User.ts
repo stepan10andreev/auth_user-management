@@ -2,8 +2,6 @@ import { getDateString } from "@/utils/getDateString";
 import { IUser } from "../../data/users";
 import { nanoid } from "nanoid";
 
-
-
 export class User {
   id: string;
   name: string;

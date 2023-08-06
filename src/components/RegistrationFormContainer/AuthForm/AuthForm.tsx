@@ -1,15 +1,13 @@
 import { Title } from '@/components/ui-components/Title/Title'
 import { UIButton } from '@/components/ui-components/UIButton/UIButton'
 import { UIInput } from '@/components/ui-components/UIInput/UIInput'
-import React, { Dispatch, FC } from 'react'
-import { ERegistrationForm, IRegistrationForm } from '../RegistrationForm/RegistrationForm.interface'
+import React, { FC } from 'react'
 import styles from '../RegistrationForm/RegistrationForm.module.scss'
 import { EAuthForm, IAuthForm } from './authForm.interface'
 
 export const AuthForm: FC<IAuthForm> = ({
   onChange, passwordValue, loginValue, onSubmit, setLogIn, setAuthError
 }) => {
-
 
   return (
     <form className={styles.form} onSubmit={onSubmit} name={EAuthForm.formName}>
@@ -41,7 +39,7 @@ export const AuthForm: FC<IAuthForm> = ({
         text={EAuthForm.returnBtn}
         name='returnBtn'
         type='button'
-        onClick={() => {setLogIn(false), setAuthError(false)}}
+        onClick={() => {setLogIn(false), setAuthError('')}}
       />
 
     </form>

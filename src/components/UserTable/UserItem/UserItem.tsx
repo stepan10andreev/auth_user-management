@@ -30,7 +30,7 @@ export const UserItem: FC<IUserItem> = ({ name, email, createdAt, lastLogin, isB
   return (
     <div className={styles.wrapper}>
       <div>
-        <Checkbox id={id} color="teal" checked={checked} onChange={handleChange}/>
+        <Checkbox id={id} color="teal" checked={checked} onChange={handleChange} />
       </div>
       <div>{id}</div>
       <div>{name}</div>

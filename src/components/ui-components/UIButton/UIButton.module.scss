@@ -3,7 +3,6 @@
   @apply p-3 container flex items-center justify-center justify-items-center
   bg-cyan-800 text-xl font-medium text-gray-100
   focus-visible:bg-cyan-600 hover:bg-cyan-600 active:bg-cyan-700 outline-none
-  /* focus-visible:text-slate-500 hover:text-slate-600 */
   transition-all duration-300
 }
 .button[name='returnBtn'],
@@ -11,7 +10,6 @@
   @apply p-3 container flex items-center justify-center justify-items-center
   bg-yellow-800 text-xl font-medium text-gray-100
   focus-visible:bg-yellow-600 hover:bg-yellow-600 active:bg-yellow-900 outline-none
-  /* focus-visible:text-slate-500  hover:text-slate-600 */
   transition-all duration-300
 }
 

@@ -3,7 +3,6 @@ import React, { ChangeEventHandler, FC } from 'react'
 import { IUserTable } from './userTable.interface'
 import styles from './UserTable.module.scss'
 import { UserItem } from './UserItem/UserItem'
-import { Checkbox } from '../ui-components/tailwinds-components/tailwinds'
 import { useAppDispatch, useAppSelector } from '../Hooks/useApp'
 import { EMethods, manageUsers, selectAll } from '@/store/userManagement'
 import { TableHeadings } from './TableHeadings/TableHeadings'
@@ -25,7 +24,7 @@ export const UserTable: FC<IUserTable> = ({ usersList }) => {
   }
   return (
     <div className={styles.table}>
-      <TableHeadings onChange={handleChange} checkedValue={checkedValue}/>
+      <TableHeadings onChange={handleChange} checkedValue={checkedValue} />
 
       {usersList.map((user, index) => (
         <UserItem

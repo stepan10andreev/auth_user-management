@@ -1,5 +1,3 @@
-import { RegistrationForm } from '@/components/RegistrationFormContainer/RegistrationForm/RegistrationForm'
-import { RegistrationFormContainer } from '@/components/RegistrationFormContainer/RegistrationFormContainer'
 import { Toolbar } from '@/components/Toolbar/Toolbar'
 import { UserTable } from '@/components/UserTable/UserTable'
 import { Container } from '@/components/ui-components/Container/Container'
@@ -11,13 +9,12 @@ import { USER_SERVICE } from '@/services/user.service'
 import { getServerSession } from 'next-auth/next'
 import Link from 'next/link'
 
-
-
-export default async function UserTablePage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+export default async function UserTablePage() {
   const session = await getServerSession(AuthConfig);
   session && await USER_SERVICE.login(session.user.id as string);
+
   const usersList = await USER_SERVICE.getUsers();
-  console.log(session)
+
   return (
     <>
       <Header>

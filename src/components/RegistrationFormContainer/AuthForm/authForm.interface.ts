@@ -10,7 +10,6 @@ export enum EAuthForm {
   returnBtn = 'Return to Registration Form',
 }
 
-
 export interface IAuthForm extends Omit<IRegistrationForm, 'emailValue' | 'nameValue'> {
   setLogIn: Dispatch<React.SetStateAction<boolean>>,
   setAuthError: Dispatch<React.SetStateAction<string>>,

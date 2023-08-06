@@ -31,9 +31,9 @@ const userManagementSlice = createSlice({
       reducer(state, action: PayloadAction<IAddUserPayload>) {
         action.payload.method === 'ADD' ?
           state.selectedUsersId = [...state.selectedUsersId, action.payload.id] :
-        action.payload.method === 'DELETE' ?
-          (state.selectedUsersId = state.selectedUsersId.filter(userId => userId != action.payload.id)):
-        ''
+          action.payload.method === 'DELETE' ?
+            (state.selectedUsersId = state.selectedUsersId.filter(userId => userId != action.payload.id)) :
+            ''
       },
       prepare(id: string, method?: EMethods) {
         return {

@@ -9,10 +9,8 @@ import { USER_SERVICE } from '@/services/user.service'
 import { useAppDispatch, useAppSelector } from '../Hooks/useApp'
 import { useRouter } from 'next/navigation'
 import { reset } from '@/store/userManagement'
-import { signOut, useSession } from "next-auth/react"
+import { signOut } from "next-auth/react"
 import { IToolbar } from './toolbar.interface'
-import { deleteCookie } from 'cookies-next'
-import { deleteNextAuthCookies } from '@/utils/deleteNextAuthCookies'
 
 export const Toolbar: FC<IToolbar> = ({ userId }) => {
   const usersId = useAppSelector((state) => state.userManagement.selectedUsersId);
@@ -22,17 +20,18 @@ export const Toolbar: FC<IToolbar> = ({ userId }) => {
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     const btnName = event.currentTarget.name;
     const currentUser = usersId.find(id => id === userId);
+
     switch (btnName) {
       case 'unlockedBtn':
         usersId.forEach(userId => USER_SERVICE.changeStatus(userId, 'unlocked'));
         break;
       case 'lockedBtn':
         usersId.forEach(userId => USER_SERVICE.changeStatus(userId, 'locked'));
-        currentUser && (signOut({redirect: false}), router.push('/'));
+        currentUser && (signOut({ redirect: false }), router.push('/'));
         break;
       case 'deleteBtn':
         usersId.forEach(userId => USER_SERVICE.delete(userId));
-        currentUser && (signOut({redirect: false}), router.push('/'));
+        currentUser && (signOut({ redirect: false }), router.push('/'));
         break;
     }
     dispatch(reset());

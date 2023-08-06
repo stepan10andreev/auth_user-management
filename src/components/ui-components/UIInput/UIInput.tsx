@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, useState } from 'react'
+import React, { ChangeEventHandler, FC } from 'react'
 import styles from './Input.module.scss'
 
 export interface IUIInputProps {

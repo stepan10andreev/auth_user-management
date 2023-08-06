@@ -12,7 +12,6 @@ export enum ERegistrationForm {
   errorEmptyValue = 'There are empty fields'
 }
 
-
 export interface IRegistrationForm {
   nameValue: string;
   loginValue: string;

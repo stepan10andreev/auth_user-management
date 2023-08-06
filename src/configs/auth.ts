@@ -1,30 +1,29 @@
 import type { AuthOptions, Session } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { IUser, USERS } from "../../data/users";
+import { USERS } from "../../data/users";
 import { JWT } from "next-auth/jwt";
 
 export const AuthConfig: AuthOptions = {
   providers: [
     Credentials({
       credentials: {
-        login: { label: 'login', type: 'text', required: true},
-        password: { label: 'password', type: 'password', required: true}
+        login: { label: 'login', type: 'text', required: true },
+        password: { label: 'password', type: 'password', required: true }
       },
       async authorize(credentials) {
-        // реквезитов нет - возвращаем null
         if (!credentials?.login || !credentials.password) throw new Error('Check your login and password');
-        // если не прошла авторизация
+
         const currentUser = USERS.find((user) => user.login === credentials.login);
 
-        if(currentUser && currentUser.password === credentials.password) {
+        if (currentUser && currentUser.password === credentials.password) {
           if (currentUser.isBlocked) {
             throw new Error('You are blocked')
           }
-          const {password, ...rest} = currentUser;
+          const { password, ...rest } = currentUser;
           return rest;
         }
 
-        if(!currentUser) {
+        if (!currentUser) {
           throw new Error('There is no such user. Register please');
         }
 
@@ -36,10 +35,9 @@ export const AuthConfig: AuthOptions = {
     signIn: '/'
   },
   callbacks: {
-    async session({ session, token }: { session: Session, token: JWT}) {
+    async session({ session, token }: { session: Session, token: JWT }) {
       // it need declarations for Session
       session.user.id = token.sub;
-
 
       return session
     },

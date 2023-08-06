@@ -1,6 +1,12 @@
-import type { AuthOptions } from "next-auth";
+import type { AuthOptions, Session } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { USERS } from "../../data/users";
+import { IUser, USERS } from "../../data/users";
+import { JWT } from "next-auth/jwt";
+
+type IID = {
+  id?: string;
+
+};
 
 export const AuthConfig: AuthOptions = {
   providers: [
@@ -26,6 +32,14 @@ export const AuthConfig: AuthOptions = {
   ],
   pages: {
     signIn: '/'
+  },
+  callbacks: {
+    async session({ session, token }: { session: Session, token: JWT}) {
+
+      session.user.id = token.sub
+
+      return session
+    },
   }
 
 }

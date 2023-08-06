@@ -32,7 +32,6 @@ export const RegistrationFormContainer = () => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     const FORM = event.currentTarget;
-    const data = getFormData(FORM);
 
     const emptyData = foundEmptyValue(getFormData(FORM) as object);
 
@@ -75,7 +74,6 @@ export const RegistrationFormContainer = () => {
           password: authData.authPassword,
           redirect: false,
         })
-
 
         if (result && !result.error) {
           setLoading(false);

@@ -9,11 +9,14 @@ import { USER_SERVICE } from '@/services/user.service'
 import { useAppDispatch, useAppSelector } from '../Hooks/useApp'
 import { useRouter } from 'next/navigation'
 import { reset } from '@/store/userManagement'
+import { useSession } from "next-auth/react"
 
 export const Toolbar = () => {
   const usersId = useAppSelector((state) => state.userManagement.selectedUsersId);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const session = useSession()
+  console.log(session)
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     const btnName = event.currentTarget.name;

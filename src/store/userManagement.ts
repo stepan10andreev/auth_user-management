@@ -48,7 +48,7 @@ const userManagementSlice = createSlice({
       state.selectAll = !state.selectAll
     },
     reset: (state) => {
-      state.reset = !state.reset;
+      state.reset = false;
       state.selectedUsersId = initialState.selectedUsersId;
     }
   }

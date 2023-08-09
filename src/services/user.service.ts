@@ -27,7 +27,7 @@ export const USER_SERVICE = {
   },
 
   async getUsers(): Promise<IUser[]> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users?key=${process.env.API_ROUTES_SECRET}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`);
 
     const data = await res.json();
 

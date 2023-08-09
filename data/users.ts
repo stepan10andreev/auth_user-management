@@ -6,6 +6,7 @@ export interface IUser {
   password: string;
   isBlocked: boolean;
   createdAt: string;
+  updatedAt: string;
   lastLogin: string;
 }
 

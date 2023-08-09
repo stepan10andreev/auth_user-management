@@ -2,6 +2,7 @@ import type { AuthOptions, Session } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
 import { USERS } from "@/app/api/users/route";
+import { USER_SERVICE } from "@/services/user.service";
 
 export const AuthConfig: AuthOptions = {
   providers: [
@@ -13,13 +14,15 @@ export const AuthConfig: AuthOptions = {
       async authorize(credentials) {
         if (!credentials?.login || !credentials.password) throw new Error('Check your login and password');
 
-        const currentUser = USERS.find((user) => user.login === credentials.login);
+        const users = await USER_SERVICE.getUsers();
+
+        const currentUser = users.find((user) => user.login === credentials.login);
 
         if (currentUser && currentUser.password === credentials.password) {
           if (currentUser.isBlocked) {
             throw new Error('You are blocked')
           }
-          const { password, ...rest } = currentUser;
+          const { password, updatedAt, ...rest } = currentUser;
           return rest;
         }
 

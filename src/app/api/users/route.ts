@@ -3,6 +3,9 @@ import { IUser } from '../../../../data/users'
 import { User } from '@/class/User';
 import { getDateString } from '@/utils/getDateString';
 import { findRepeatElement } from '@/utils/findRepeatElement';
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient();
 
 export const USERS: IUser[] = [
   { "isBlocked": false, "name": "Lionel", "email": "test@gmail.com", "password": "1", "login": "Lionel", "createdAt": "2023-08-06 18:56:55", "lastLogin": "2023-08-06 18:56:55", "id": "Xf5LIcnOu01kp5yPvzRwn" },
@@ -12,51 +15,49 @@ export const USERS: IUser[] = [
 ]
 
 export async function GET(request: NextRequest) {
-  // // if request: Request (global type) only this variant
-  // const { searchParams } = new URL(request.url)
+  // const searchParams = request.nextUrl.searchParams;
+  // const key = searchParams.get('key');
 
-  const searchParams = request.nextUrl.searchParams;
-  const key = searchParams.get('key');
+  // if (!key || key !== process.env.API_ROUTES_SECRET) {
+  //   return NextResponse.json({ message: 'You are not authenticated to call to this API' }, { status: 401 });
+  // }
+  const users = await prisma.user.findMany()
 
-  if (!key || key !== process.env.API_ROUTES_SECRET) {
-    return NextResponse.json({ message: 'You are not authenticated to call to this API' }, { status: 401 });
-  }
-
-  return NextResponse.json(USERS, { status: 200 });
+  return NextResponse.json(users, { status: 200 });
 }
 
 
-export async function POST(request: NextRequest) {
+// export async function POST(request: NextRequest) {
 
-  const body = await request.json();
+//   const body = await request.json();
 
-  const repeatedLogin = findRepeatElement(USERS, 'login', body.login);
+//   const repeatedLogin = findRepeatElement(USERS, 'login', body.login);
 
-  if (repeatedLogin) {
-    return NextResponse.json({
-      message: 'This login is already exists',
-      error: true
-    }, {
-      status: 409,
-    })
-  }
+//   if (repeatedLogin) {
+//     return NextResponse.json({
+//       message: 'This login is already exists',
+//       error: true
+//     }, {
+//       status: 409,
+//     })
+//   }
 
-  const lastLogin = getDateString();
+//   const lastLogin = getDateString();
 
-  const userObj: Omit<IUser, 'id' | 'createdAt'> = { ...body, lastLogin };
+//   const userObj: Omit<IUser, 'id' | 'createdAt'> = { ...body, lastLogin };
 
-  const USER = new User(userObj);
+//   const USER = new User(userObj);
 
-  USERS.push(USER);
+//   USERS.push(USER);
 
-  return NextResponse.json({
-    message: 'You are registered',
-    username: `${USER.name}`,
-    id: `${USER.id}`
-  }, {
-    status: 200,
-  })
-}
+//   return NextResponse.json({
+//     message: 'You are registered',
+//     username: `${USER.name}`,
+//     id: `${USER.id}`
+//   }, {
+//     status: 200,
+//   })
+// }
 
 export async function PATCH(request: NextRequest) {
   const body = await request.json();

@@ -4,7 +4,7 @@ import { IUser } from "../../data/users";
 
 export const USER_SERVICE = {
   async register(data: unknown): Promise<any> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/register`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -12,9 +12,17 @@ export const USER_SERVICE = {
       },
       body: JSON.stringify(data)
     });
+    // const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-type': 'application/json',
+    //     'Authorization': `${process.env.API_ROUTES_SECRET}`,
+    //   },
+    //   body: JSON.stringify(data)
+    // });
 
     const result = await res.json();
-
+    console.log(result)
     return result;
   },
 

@@ -15,7 +15,7 @@ export default async function UserTablePage() {
   session && await USER_SERVICE.login(session.user.id as string);
 
   const usersList = await USER_SERVICE.getUsers();
-
+  console.log(usersList)
   return (
     <>
       <Header>

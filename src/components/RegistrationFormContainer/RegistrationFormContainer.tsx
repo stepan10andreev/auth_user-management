@@ -48,7 +48,7 @@ export const RegistrationFormContainer = () => {
 
         setLoading(true);
         const response = await USER_SERVICE.register(regData)
-
+        // console.log(response)
         if (response.error) {
           setNotRegisteredError(response.message)
           setLoading(false);
@@ -61,7 +61,7 @@ export const RegistrationFormContainer = () => {
           })
           setLoading(false);
 
-          router.push('/user-table')
+          // router.push('/user-table')
         }
         break;
       case 'authForm':

@@ -4,6 +4,7 @@ import { User } from '@/class/User';
 import { getDateString } from '@/utils/getDateString';
 import { findRepeatElement } from '@/utils/findRepeatElement';
 import { PrismaClient } from '@prisma/client'
+import { PRISMA_SERVICE } from '@/services/prisma.service';
 
 const prisma = new PrismaClient();
 
@@ -56,30 +57,31 @@ export async function GET(request: NextRequest) {
 // }
 
 export async function PATCH(request: NextRequest) {
-  const body = await request.json();
+  const { id, isBlocked, lastLogin } = await request.json();
 
-  const noUser = !USERS.find(user => user.id === body.id);
+  const users = await prisma.user.findMany();
+
+  const noUser = !users.find(user => user.id === id);
 
   if (noUser) return NextResponse.json({
     message: 'There is no user with such id',
-    id: `${body.id}`
+    id: `${id}`
   }, {
     status: 409,
   })
 
-  USERS.map(user => {
-    user.id === body.id && (
-      body.isBlocked === 'locked' ? user.isBlocked = true :
-        body.isBlocked === 'unlocked' ? user.isBlocked = false :
-          body.lastLogin ? user.lastLogin = body.lastLogin :
+  users.map(async (user) => {
+    user.id === id && (
+      isBlocked === 'locked' ? await PRISMA_SERVICE.update(id, 'isBlocked', true) :
+        isBlocked === 'unlocked' ? await PRISMA_SERVICE.update(id, 'isBlocked', false) :
+          lastLogin ? await PRISMA_SERVICE.update(id, 'lastLogin', new Date()) :
             ''
     )
   })
 
   return NextResponse.json({
     message: 'Status is changed',
-    username: `${body.id}`,
-    id: `${body.id}`
+    id: `${id}`
   }, {
     status: 200,
   })
@@ -87,26 +89,38 @@ export async function PATCH(request: NextRequest) {
 
 
 export async function DELETE(request: NextRequest) {
+  const { id } = await request.json();
 
-  const body = await request.json();
-  const userId = body.id;
-  const userIndex = USERS.findIndex(user => user.id === userId);
-
-  if (userIndex === -1) return NextResponse.json({
-    message: 'There is no user with such id',
-    id: `${body.id}`
-  }, {
-    status: 409,
+  const user = await prisma.user.delete({
+    where: { id }
   })
 
-  USERS.splice(userIndex, 1);
-
   return NextResponse.json({
-    message: `User ${userId} is deleted`,
-    id: userId
+    message: `User ${user.id} is deleted`,
+    id: user.id
   }, {
     status: 200,
   })
+
+  // const body = await request.json();
+  // const userId = body.id;
+  // const userIndex = USERS.findIndex(user => user.id === userId);
+
+  // if (userIndex === -1) return NextResponse.json({
+  //   message: 'There is no user with such id',
+  //   id: `${body.id}`
+  // }, {
+  //   status: 409,
+  // })
+
+  // USERS.splice(userIndex, 1);
+
+  // return NextResponse.json({
+  //   message: `User ${userId} is deleted`,
+  //   id: userId
+  // }, {
+  //   status: 200,
+  // })
 }
 
 

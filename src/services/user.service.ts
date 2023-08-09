@@ -1,5 +1,6 @@
 import { getDateString } from "@/utils/getDateString";
 import { IUser } from "../../data/users";
+import { NextResponse } from "next/server";
 
 
 export const USER_SERVICE = {
@@ -71,7 +72,10 @@ export const USER_SERVICE = {
     return data;
   },
 
-  async delete(id: string): Promise<any> {
+  async delete(id: string): Promise<NextResponse<{
+    message: string;
+    id: string;
+  }>> {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`, {
       method: 'DELETE',
       headers: {

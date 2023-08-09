@@ -61,7 +61,7 @@ export const RegistrationFormContainer = () => {
           })
           setLoading(false);
 
-          // router.push('/user-table')
+          router.push('/user-table')
         }
         break;
       case 'authForm':

@@ -11,3 +11,6 @@ export interface IUser {
 }
 
 
+export type TUserProps = 'id' | 'name' | 'email' | 'login' | 'password' | 'isBlocked' | 'createdAt' | 'updatedAt' | 'lastLogin'
+
+

@@ -17,7 +17,7 @@ export const UserItem: FC<IUserItem> = ({ name, email, createdAt, lastLogin, isB
 
   useEffect(() => {
     selectAllValue ? setChecked(true) : setChecked(false);
-    resetStatus && (setChecked(false), dispatch(reset()));
+    resetStatus && (setChecked(false), dispatch(reset(false)));
   }, [selectAllValue, resetStatus])
 
 

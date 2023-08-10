@@ -44,13 +44,22 @@ const userManagementSlice = createSlice({
         }
       },
     },
+    reset: {
+      reducer(state, action: PayloadAction<{ value: boolean}>) {
+        state.reset = action.payload.value;
+        state.selectedUsersId = initialState.selectedUsersId;
+      },
+      prepare(value: boolean) {
+        return {
+          payload: {
+            value
+          }
+        }
+      }
+    },
     selectAll: (state) => {
       state.selectAll = !state.selectAll
     },
-    reset: (state) => {
-      state.reset = false;
-      state.selectedUsersId = initialState.selectedUsersId;
-    }
   }
 })
 

@@ -35,6 +35,10 @@ export const RegistrationFormContainer = () => {
 
     const emptyData = foundEmptyValue(getFormData(FORM) as object);
 
+    setEmptyValue(false);
+    setAuthError('');
+    setNotRegisteredError('');
+
     if (emptyData) {
       setEmptyValue(true);
       return;
@@ -54,11 +58,13 @@ export const RegistrationFormContainer = () => {
           setLoading(false);
         } else {
           setNotRegisteredError('');
+
           await signIn('credentials', {
             login: regData.login,
             password: regData.password,
             redirect: false,
           })
+
           setLoading(false);
 
           router.push('/user-table')

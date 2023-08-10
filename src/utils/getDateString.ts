@@ -1,13 +1,14 @@
 import { getPadTime } from "./getPadTime";
 
-export const getDateString = () => {
-  const NOW = new Date();
-  const string = NOW.getFullYear()
-    + '-' + getPadTime(NOW.getMonth() + 1)
-    + '-' + getPadTime(NOW.getDate())
-    + ' ' + getPadTime(NOW.getHours())
-    + ':' + getPadTime(NOW.getMinutes())
-    + ':' + getPadTime(NOW.getSeconds());
+export const getDateString = (date?: Date) => {
+  let currentDate =  date ? date : new Date()
+
+  const string = currentDate.getFullYear()
+    + '-' + getPadTime(currentDate.getMonth() + 1)
+    + '-' + getPadTime(currentDate.getDate())
+    + ' ' + getPadTime(currentDate.getHours())
+    + ':' + getPadTime(currentDate.getMinutes())
+    + ':' + getPadTime(currentDate.getSeconds());
 
   return string
 }

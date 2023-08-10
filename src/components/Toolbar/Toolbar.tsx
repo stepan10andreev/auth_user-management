@@ -34,7 +34,7 @@ export const Toolbar: FC<IToolbar> = ({ userId }) => {
         currentUser && (signOut({ redirect: false }), router.push('/'));
         break;
     }
-    dispatch(reset());
+    dispatch(reset(true));
     router.refresh();
   }
 

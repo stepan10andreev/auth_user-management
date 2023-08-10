@@ -26,7 +26,7 @@ export const UserTable: FC<IUserTable> = ({ usersList }) => {
     <div className={styles.table}>
       <TableHeadings onChange={handleChange} checkedValue={checkedValue} />
 
-      {usersList.map((user, index) => (
+      {usersList.map((user) => (
         <UserItem
           key={user.id}
           name={user.name}

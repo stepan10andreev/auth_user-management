@@ -1,8 +1,8 @@
 import { getPadTime } from "./getPadTime";
 
-export const getDateString = (date?: Date) => {
-  let currentDate =  date ? date : new Date()
-
+export const getDateString = (date?: string) => {
+  let currentDate = date ? new Date(date) : new Date()
+  const x = new Date()
   const string = currentDate.getFullYear()
     + '-' + getPadTime(currentDate.getMonth() + 1)
     + '-' + getPadTime(currentDate.getDate())

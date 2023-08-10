@@ -6,6 +6,7 @@ import { BlockedIcon } from '@/components/ui-components/Icons/BlockedIcon'
 import { UnblockedIcon } from '@/components/ui-components/Icons/UnblockedIcon'
 import { useAppDispatch, useAppSelector } from '@/components/Hooks/useApp'
 import { EMethods, manageUsers, reset } from '@/store/userManagement'
+import { getDateString } from '@/utils/getDateString'
 
 export const UserItem: FC<IUserItem> = ({ name, email, createdAt, lastLogin, isBlocked, id }) => {
   const [checked, setChecked] = useState(false);
@@ -35,8 +36,8 @@ export const UserItem: FC<IUserItem> = ({ name, email, createdAt, lastLogin, isB
       <div>{id}</div>
       <div>{name}</div>
       <div>{email}</div>
-      <div>{createdAt}</div>
-      <div>{lastLogin}</div>
+      <div>{getDateString(createdAt)}</div>
+      <div>{getDateString(lastLogin)}</div>
       <div>{isBlocked ? <BlockedIcon /> : <UnblockedIcon />}</div>
     </div>
   )

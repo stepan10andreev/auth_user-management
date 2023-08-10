@@ -1,7 +1,6 @@
 import type { AuthOptions, Session } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
-import { USERS } from "@/app/api/users/route";
 import { USER_SERVICE } from "@/services/user.service";
 
 export const AuthConfig: AuthOptions = {
@@ -23,6 +22,7 @@ export const AuthConfig: AuthOptions = {
             throw new Error('You are blocked')
           }
           const { password, updatedAt, ...rest } = currentUser;
+          USER_SERVICE.login(currentUser.id);
           return rest;
         }
 

@@ -1,7 +1,5 @@
-import { getDateString } from "@/utils/getDateString";
 import { IUser } from "../../data/users";
 import { NextResponse } from "next/server";
-
 
 export const USER_SERVICE = {
   async register(data: unknown): Promise<any> {
@@ -13,17 +11,8 @@ export const USER_SERVICE = {
       },
       body: JSON.stringify(data)
     });
-    // const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-type': 'application/json',
-    //     'Authorization': `${process.env.API_ROUTES_SECRET}`,
-    //   },
-    //   body: JSON.stringify(data)
-    // });
 
     const result = await res.json();
-    console.log(result)
     return result;
   },
 
@@ -31,12 +20,11 @@ export const USER_SERVICE = {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`);
 
     const data = await res.json();
-
+    console.log(data)
     return data;
   },
 
   async login(id: string): Promise<any> {
-    const lastLogin = getDateString();
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`, {
       method: 'PATCH',
       headers: {
@@ -45,7 +33,7 @@ export const USER_SERVICE = {
       },
       body: JSON.stringify({
         id: id,
-        lastLogin: lastLogin,
+        lastLogin: true,
       }),
     })
 

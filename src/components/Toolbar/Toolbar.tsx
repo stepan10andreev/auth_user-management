@@ -1,5 +1,5 @@
 'use client'
-import React, { FC, MouseEventHandler } from 'react'
+import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { UIButton } from '../ui-components/UIButton/UIButton'
 import { UnlockedIcon } from '../ui-components/Icons/UnlockedIcon'
 import { LockedIcon } from '../ui-components/Icons/LockedIcon'
@@ -11,38 +11,57 @@ import { useRouter } from 'next/navigation'
 import { reset } from '@/store/userManagement'
 import { signOut } from "next-auth/react"
 import { IToolbar } from './toolbar.interface'
+import { BounceLoader } from 'react-spinners'
+import { Modal } from '../ui-components/Modal/Modal'
 
 export const Toolbar: FC<IToolbar> = ({ userId }) => {
+  const [loading, setLoading] = useState(false);
+  const [updating, setUpdating] = useState(false);
+
   const usersId = useAppSelector((state) => state.userManagement.selectedUsersId);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    updating && router.refresh();
+  }, [updating])
+
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     const btnName = event.currentTarget.name;
     const currentUser = usersId.find(id => id === userId);
-
+    setLoading(true)
     switch (btnName) {
       case 'unlockedBtn':
-        usersId.forEach(userId => USER_SERVICE.changeStatus(userId, 'unlocked'));
+        usersId.forEach(async (userId) => await USER_SERVICE.changeStatus(userId, 'unlocked'));
         break;
       case 'lockedBtn':
-        usersId.forEach(userId => USER_SERVICE.changeStatus(userId, 'locked'));
+        usersId.forEach(async (userId) => await USER_SERVICE.changeStatus(userId, 'locked'));
         currentUser && (signOut({ redirect: false }), router.push('/'));
         break;
       case 'deleteBtn':
-        usersId.forEach(userId => USER_SERVICE.delete(userId));
+        usersId.forEach(async (userId) => await USER_SERVICE.delete(userId));
         currentUser && (signOut({ redirect: false }), router.push('/'));
         break;
     }
     dispatch(reset(true));
-    router.refresh();
+    setLoading(false);
+    setUpdating(true)
+    // router.refresh();
   }
 
   return (
-    <div className={styles.wrapper}>
-      <UIButton onClick={handleClick} icon={<UnlockedIcon />} name='unlockedBtn' />
-      <UIButton onClick={handleClick} icon={<LockedIcon />} name='lockedBtn' />
-      <UIButton onClick={handleClick} icon={<DeleteIcon />} name='deleteBtn' />
-    </div>
+    <>
+      <div className={styles.wrapper}>
+        <UIButton onClick={handleClick} icon={<UnlockedIcon />} name='unlockedBtn' />
+        <UIButton onClick={handleClick} icon={<LockedIcon />} name='lockedBtn' />
+        <UIButton onClick={handleClick} icon={<DeleteIcon />} name='deleteBtn' />
+      </div>
+
+      {loading && (
+        <Modal>
+          <BounceLoader color="#36d7b7" size={120} />
+        </Modal>
+      )}
+    </>
   )
 }

@@ -39,7 +39,7 @@ export const AuthForm: FC<IAuthForm> = ({
         text={EAuthForm.returnBtn}
         name='returnBtn'
         type='button'
-        onClick={() => {setLogIn(false), setAuthError('')}}
+        onClick={() => { setLogIn(false), setAuthError('') }}
       />
 
     </form>

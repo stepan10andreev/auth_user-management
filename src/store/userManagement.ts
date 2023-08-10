@@ -45,7 +45,7 @@ const userManagementSlice = createSlice({
       },
     },
     reset: {
-      reducer(state, action: PayloadAction<{ value: boolean}>) {
+      reducer(state, action: PayloadAction<{ value: boolean }>) {
         state.reset = action.payload.value;
         state.selectedUsersId = initialState.selectedUsersId;
       },

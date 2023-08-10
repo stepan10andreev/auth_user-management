@@ -1,5 +1,5 @@
 'use client'
-import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
+import React, { FC, MouseEventHandler, useState } from 'react'
 import { UIButton } from '../ui-components/UIButton/UIButton'
 import { UnlockedIcon } from '../ui-components/Icons/UnlockedIcon'
 import { LockedIcon } from '../ui-components/Icons/LockedIcon'
@@ -16,17 +16,12 @@ import { Modal } from '../ui-components/Modal/Modal'
 
 export const Toolbar: FC<IToolbar> = ({ userId }) => {
   const [loading, setLoading] = useState(false);
-  const [updating, setUpdating] = useState(false);
 
   const usersId = useAppSelector((state) => state.userManagement.selectedUsersId);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    updating && router.refresh();
-  }, [updating])
-
-  const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+  const handleClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
     const btnName = event.currentTarget.name;
     const currentUser = usersId.find(id => id === userId);
     setLoading(true)
@@ -45,8 +40,7 @@ export const Toolbar: FC<IToolbar> = ({ userId }) => {
     }
     dispatch(reset(true));
     setLoading(false);
-    setUpdating(true)
-    // router.refresh();
+    router.refresh();
   }
 
   return (

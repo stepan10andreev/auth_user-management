@@ -1,6 +1,6 @@
 import { getPadTime } from "./getPadTime";
 
-export const getDateString = (date?: string) => {
+export const getDateString = (date?: Date) => {
   let currentDate = date ? new Date(date) : new Date()
   const x = new Date()
   const string = currentDate.getFullYear()

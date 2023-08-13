@@ -13,7 +13,11 @@ export const PRISMA_SERVICE = {
   async getUsers() {
     try {
       const users = await prisma.user.findMany();
-      return users;
+      const usersWithoutPasswords = users.map(user => {
+        const { password, updatedAt, ...rest } = user;
+        return rest;
+      })
+      return usersWithoutPasswords;
     } catch (err) {
       console.log(err);
       // return err;

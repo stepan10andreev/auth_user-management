@@ -27,7 +27,7 @@ export const Toolbar: FC<IToolbar> = ({ userId }) => {
     const btnName = event.currentTarget.name;
     const currentUser = usersId.find(id => id === userId);
     setLoading(true)
-    console.log('loading true')
+
     switch (btnName) {
       case 'unlockedBtn':
         // usersId.forEach(async (userId) => await USER_SERVICE.changeStatus(userId, 'unlocked'));
@@ -50,7 +50,7 @@ export const Toolbar: FC<IToolbar> = ({ userId }) => {
         currentUser && (signOut({ redirect: false }), router.push('/'));
         break;
     }
-    console.log('loading false')
+
     dispatch(reset(true));
     setLoading(false);
     router.refresh();

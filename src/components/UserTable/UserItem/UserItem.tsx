@@ -36,8 +36,8 @@ export const UserItem: FC<IUserItem> = ({ name, email, createdAt, lastLogin, isB
       <div>{id}</div>
       <div>{name}</div>
       <div>{email}</div>
-      <div>{getDateString(createdAt)}</div>
-      <div>{getDateString(lastLogin)}</div>
+      <div suppressHydrationWarning>{getDateString(createdAt)}</div>
+      <div suppressHydrationWarning>{getDateString(lastLogin)}</div>
       <div>{isBlocked ? <BlockedIcon /> : <UnblockedIcon />}</div>
     </div>
   )

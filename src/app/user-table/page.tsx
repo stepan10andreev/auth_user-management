@@ -5,16 +5,18 @@ import { Content } from '@/components/ui-components/Content/Content'
 import { Header } from '@/components/ui-components/Header/Header'
 import { Welcome } from '@/components/ui-components/Welcome/Welcome'
 import { AuthConfig } from '@/configs/auth'
+import { PRISMA_SERVICE } from '@/services/prisma.service'
 import { USER_SERVICE } from '@/services/user.service'
 import { getServerSession } from 'next-auth/next'
 import Link from 'next/link'
+import { IUser } from '../../../data/users'
 
 export default async function UserTablePage() {
 
   const session = await getServerSession(AuthConfig);
-  session && await USER_SERVICE.login(session.user.id as string);
+  session && await PRISMA_SERVICE.login(session.user.id as string);
 
-  const usersList = await USER_SERVICE.getUsers();
+  const usersList = await PRISMA_SERVICE.getUsers();
 
   return (
     <>
@@ -26,8 +28,8 @@ export default async function UserTablePage() {
       </Header>
       {session && (
         <Content>
-          <Toolbar userId={session.user.id as string} />
-          <UserTable usersList={usersList} />
+            <Toolbar userId={session.user.id as string} />
+            <UserTable usersList={usersList as IUser[]} />
         </Content>
       )}
     </>

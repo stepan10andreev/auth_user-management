@@ -20,7 +20,7 @@ export const USER_SERVICE = {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASIC_URL}/api/users`, { cache: 'no-store' });
 
     const data = await res.json();
-    console.log(data)
+    // console.log(data)
     return data;
   },
 

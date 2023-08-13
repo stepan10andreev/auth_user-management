@@ -1,13 +1,13 @@
 export interface IUser {
   id: string;
-  name: string;
   email: string;
   login: string;
   password: string;
+  name: string;
   isBlocked: boolean;
-  createdAt: string;
-  updatedAt: string;
-  lastLogin: string;
+  createdAt: Date;
+  updatedAt: Date;
+  lastLogin: Date;
 }
 
 
